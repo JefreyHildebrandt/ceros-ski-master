@@ -93,6 +93,7 @@ how creative candidates get with this.
 We are looking forward to see what you come up with!
 
 **Jeff Hildebrandt edits*********************************************************************************
+
 **Crash Bug**
 * for this bug after the skier crashed the skier's direction would be set to the enum SKIER_CRASH
 * the SKIER_CRASH enum equals 0, and SKIER_LEFT equals 1
