@@ -4,8 +4,11 @@ require("@babel/register");
 
 // Webpack Configuration
 const config = {
+    mode: 'development',
 
     entry: ['babel-polyfill', './src/index.js'],
+    
+    devtool: 'inline-source-map',
 
     output: {
         path: path.resolve(__dirname, './dist'),

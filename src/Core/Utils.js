@@ -24,3 +24,15 @@ export class Rect {
         this.bottom = bottom;
     }
 }
+
+/**
+ * Creates a rectangle based off of asset size and position
+ * @param {width: number, height: number} asset the asset from Asset Manager
+ * @param {*} position the position of the asset
+ */
+export function getAssetBounds(asset, position) {
+    return new Rect(position.x - asset.width / 2,
+        position.y - asset.height / 2,
+        position.x + asset.width / 2,
+        position.y);
+}

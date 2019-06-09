@@ -30,6 +30,17 @@ export class Canvas {
         document.body.appendChild(canvas);
     }
 
+    /**
+     * Resets the canvas after it was already initialized
+     */
+    resetCanvas() {
+        this.drawOffset = {
+            x: 0,
+            y: 0
+        };
+        clearCanvas();
+    }
+
     clearCanvas() {
         this.ctx.clearRect(this.x, this.y, this.width, this.height);
     }
@@ -44,5 +55,17 @@ export class Canvas {
         y -= this.drawOffset.y;
 
         this.ctx.drawImage(image, x, y, width, height);
+    }
+
+    /**
+     * Draws text on the canvas
+     * @param {string} text the text to be displayed
+     * @param {number} x the x location to display the text
+     * @param {number} y the y location to display the text
+     * @param {string} font the font style/size
+     */
+    drawText(text, x, y, font) {
+        this.ctx.font = font;
+        this.ctx.fillText(text, x, y);
     }
 }
