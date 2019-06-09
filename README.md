@@ -103,65 +103,65 @@ We are looking forward to see what you come up with!
 **Added**
 * If you press 'r' the game will reset
 * jump ability
-** if you press 'space' the skier will jump
-** while the skier is in the jump state it will be able to jump over rocks and ramps for 30 frames
-** the skier will still crash on trees
+  * if you press 'space' the skier will jump
+  * while the skier is in the jump state it will be able to jump over rocks and ramps for 30 frames
+  * the skier will still crash on trees
 * trick jump ability 
-** when you press 'space' again the skier will begin to do a trick 
-** if you hit 'space' five times then the skier will complete the trick 
-** if you are in the middle of a trick when the skier tries to land, then the skier will crash 
-** while you are doing a trick in the air, you will gain style points 
-** if you hold the skier_jump_5 pose, then you'll gain extra points since that pose has a bunch of sparkles
+  * when you press 'space' again the skier will begin to do a trick 
+  * if you hit 'space' five times then the skier will complete the trick 
+  * if you are in the middle of a trick when the skier tries to land, then the skier will crash 
+  * while you are doing a trick in the air, you will gain style points 
+  * if you hold the skier_jump_5 pose, then you'll gain extra points since that pose has a bunch of sparkles
 * jump ramps 
-** when the skier collides with a jump ramp then they will stay in the air at double speed for 100 frames
-** the skier remains in the jump state for the entire jump 
-** the skier will still collide with trees even if jumping from a ramp 
-** doing a jump ramp is the only way to outrun the rhino
-*** the rhino runs 30% faster than the skier and runs directly towards it 
-*** the ramp jump makes the skier travel twice as fast, so if you can hit a lot of jumps then the rhino won't catch you.
+  * when the skier collides with a jump ramp then they will stay in the air at double speed for 100 frames
+  * the skier remains in the jump state for the entire jump 
+  * the skier will still collide with trees even if jumping from a ramp 
+  * doing a jump ramp is the only way to outrun the rhino
+    * the rhino runs 30% faster than the skier and runs directly towards it 
+    * the ramp jump makes the skier travel twice as fast, so if you can hit a lot of jumps then the rhino won't catch you.
 * Distance score and Style score is displayed
-** Distance score takes the vertical distance that the skier has traveled and shows it to the user (both up and down motion).
-** Style score adds points if the skier is doing a trick and subtracts points if the skier is crashes
+  * Distance score takes the vertical distance that the skier has traveled and shows it to the user (both up and down motion).
+  * Style score adds points if the skier is doing a trick and subtracts points if the skier is crashes
 * Rhino
-** chases down and eats the skier 
-** doesn't move until the skier hits a distance of 1000
-** starts -1000 pixels from the skier's start line
-** runs 30% faster than the skier, so will catch up if the skier does not take lots of ramp jumps or if the skier crashes
-** destroys obstacles if touches them.  I added a 'destroyed' asset for each obstacle and if the rhino touches a non-destroyed obstacle it will switch it's asset name
-** eats the skier when a collision is detected
-** once the skier is eaten, the skier's asset is replaced with a pool of blood
-** animation updates every 10 frames, otherwise it looks very choppy
-** checks where the skier is and moves toward it.  If the skier is direcly below it will move down, if the skier is down left then it will move down left, etc... 
+  * chases down and eats the skier 
+  * doesn't move until the skier hits a distance of 1000
+  * starts -1000 pixels from the skier's start line
+  * runs 30% faster than the skier, so will catch up if the skier does not take lots of ramp jumps or if the skier crashes
+  * destroys obstacles if touches them.  I added a 'destroyed' asset for each obstacle and if the rhino touches a non-destroyed obstacle it will switch it's asset name
+  * eats the skier when a collision is detected
+  * once the skier is eaten, the skier's asset is replaced with a pool of blood
+  * animation updates every 10 frames, otherwise it looks very choppy
+  * checks where the skier is and moves toward it.  If the skier is direcly below it will move down, if the skier is down left then it will move down left, etc... 
 
 **Coding Decisions:**
 * Adding state to the skier in addition to the direction 
-** I added state since ultimately relying solely on direction is what caused the bug I fixed
-** State allowed me to treat motion differently depending on the state the skier is currently in
-*** for instance when jumping I did not want the user to be able to change the trajectory
+  * I added state since ultimately relying solely on direction is what caused the bug I fixed
+  * State allowed me to treat motion differently depending on the state the skier is currently in
+    * for instance when jumping I did not want the user to be able to change the trajectory
 * Creating MovingEntity that skier and rhino extend
-** I noticed that the skier and rhino share much of the same functionality
-*** Both the rhino and skier need to move around on the screen
-*** the rhino moves based on the skier position and the skier moves based on the user input
+  * I noticed that the skier and rhino share much of the same functionality
+    * Both the rhino and skier need to move around on the screen
+    * the rhino moves based on the skier position and the skier moves based on the user input
 * Creating MovingEntityManager
-** in addition to the rhino and skier having similar needs, they also control similarly
-*** for instance both the skier and the rhino need to know when they collide with an Obstacle 
-**** the rhino will destroy the obstacle and the skier will crash 
-*** both need to know when they collide into eachother
-*** both have a need for a move() function every frame 
-** Adding this manager took some of the responsibility off of Game.ts and allowed all MovingEntities to be controlled by this manager 
-** This also followed the pattern presented by ObstacleManager and AssetManager
-** Allows easier unit testing without having to create/mock a Game object
+  * in addition to the rhino and skier having similar needs, they also control similarly
+    * for instance both the skier and the rhino need to know when they collide with an Obstacle 
+      * the rhino will destroy the obstacle and the skier will crash 
+    * both need to know when they collide into eachother
+    * both have a need for a move() function every frame 
+  * Adding this manager took some of the responsibility off of Game.ts and allowed all MovingEntities to be controlled by this manager 
+  * This also followed the pattern presented by ObstacleManager and AssetManager
+  * Allows easier unit testing without having to create/mock a Game object
 * Skier can outrun the rhino
-** I liked the idea that the skier if performing perfectly could outrun the rhino
-** Since the game is so simplistic, the game would have to be challenging in order to be fun 
+  * I liked the idea that the skier if performing perfectly could outrun the rhino
+  * Since the game is so simplistic, the game would have to be challenging in order to be fun 
 * Keep track of distance and style
-** if there wasn't some sort of point system, then there would be no goal for the game and there would be no point in playing it 
-** I made the penalty for crashes high to add more difficulty and replayability to the game
-** You get -25 points per frame for a crash, additionally you get +10 points per frame for a trick and an aditional +50 points if you're in the style trick position.
+  * if there wasn't some sort of point system, then there would be no goal for the game and there would be no point in playing it 
+  * I made the penalty for crashes high to add more difficulty and replayability to the game
+  * You get -25 points per frame for a crash, additionally you get +10 points per frame for a trick and an aditional +50 points if you're in the style trick position.
 
 **Running the Code:**
 * locally
-** npm install
-** npm run dev 
+  1. npm install
+  1. npm run dev 
 
 *********************************************************************************************************
