@@ -38,7 +38,7 @@ export class Canvas {
             x: 0,
             y: 0
         };
-        clearCanvas();
+        this.clearCanvas();
     }
 
     clearCanvas() {

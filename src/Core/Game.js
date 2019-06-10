@@ -108,27 +108,8 @@ export class Game {
      * @param {*} event the key press event
      */
     handleKeyDown(event) {
+        this.movingEntityManager.handleKeyDown(event);
         switch (event.which) {
-            case Constants.KEYS.LEFT:
-                this.movingEntityManager.getSkier().turnLeft();
-                event.preventDefault();
-                break;
-            case Constants.KEYS.RIGHT:
-                this.movingEntityManager.getSkier().turnRight();
-                event.preventDefault();
-                break;
-            case Constants.KEYS.UP:
-                this.movingEntityManager.getSkier().turnUp();
-                event.preventDefault();
-                break;
-            case Constants.KEYS.DOWN:
-                this.movingEntityManager.getSkier().turnDown();
-                event.preventDefault();
-                break;
-            case Constants.KEYS.SPACE:
-                this.movingEntityManager.getSkier().jump(Constants.SKIER_JUMP_FRAMES);
-                event.preventDefault();
-                break;
             case Constants.KEYS.R:
                 this.reset();
                 break;

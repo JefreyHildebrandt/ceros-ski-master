@@ -160,4 +160,29 @@ export class MovingEntityManager {
 
         return intersectTwoRects(entity1Bounds, entity2Bounds);
     }
+
+    handleKeyDown(event) {
+        switch (event.which) {
+            case Constants.KEYS.LEFT:
+                this.skier.turnLeft();
+                event.preventDefault();
+                break;
+            case Constants.KEYS.RIGHT:
+                this.skier.turnRight();
+                event.preventDefault();
+                break;
+            case Constants.KEYS.UP:
+                this.skier.turnUp();
+                event.preventDefault();
+                break;
+            case Constants.KEYS.DOWN:
+                this.skier.turnDown();
+                event.preventDefault();
+                break;
+            case Constants.KEYS.SPACE:
+                this.skier.jump(Constants.SKIER_JUMP_FRAMES);
+                event.preventDefault();
+                break;
+        }
+    }
 }
