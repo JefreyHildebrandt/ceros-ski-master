@@ -34,6 +34,11 @@ export class MovingEntityManager {
             this.rhino.setPositionToMoveTo(this.skier.getPosition());
             this.rhino.move(this.skier, assetManager);
         }
+        else {
+            // the rhino will update the x position until the skier reaches the distance threshold
+            // this prevents the user from going really far left or right to avoid the rhino before it starts
+            this.rhino.x = this.skier.x;
+        }
     }
 
     /**

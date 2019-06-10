@@ -63,7 +63,7 @@ export const SKIER_RAMP_JUMP_SPEED = 20;
 export const SKIER_JUMP_FRAMES = 30;
 export const SKIER_JUMP_RAMP_FRAMES = 100;
 
-export const RHINO_STARTING_DISTANCE = -1000;
+export const RHINO_STARTING_DISTANCE = -1500;
 export const RHINO_WAIT_DISTANCE_TO_MOVE = 1000;
 export const RHINO_SPEED = 13;
 export const RHINO_FRAMES_TO_REDRAW = 10;
