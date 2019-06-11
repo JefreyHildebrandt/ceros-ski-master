@@ -96,49 +96,60 @@ We are looking forward to see what you come up with!
 
 **Jeff Hildebrandt Edits**
 
-**Crash Bug**
+**Crash Bug Description**
 * for this bug after the skier crashed the skier's direction would be set to the enum SKIER_CRASH
 * the SKIER_CRASH enum equals 0, and SKIER_LEFT equals 1
 * when the skier crashes and tries to move left the skier's direction becomes -1 which sets the skier's direction 
+  * the value -1 did not exist in the constants' enum SKIER_CRASH
+
+**Crash Bug Solution**
 * state was added to the skier which represents whether the skier is crashed, skiing, or jumping, and has custom actions for motion depending on the state.
+  * this allowed me to reset the direction to down and to move the skier actually left or right to escape the obstacle
 * added a unit test that tests the skier's state and direction after a crash 
+  * added it to the Game.test.js file since it seemed the file was placed there for me
+    * the tests tests the functionality of the Skier object and if actual code would make more sense to go there
 
 **Added**
 * If you press 'r' the game will reset
 * jump ability
   * if you press 'space' the skier will jump
   * while the skier is in the jump state it will be able to jump over rocks and ramps for 30 frames
-  * the skier will still crash on trees
+  * the skier will still crash into trees while jumping
 * trick jump ability 
   * when you press 'space' again the skier will begin to do a trick 
   * if you hit 'space' five times then the skier will complete the trick 
   * if you are in the middle of a trick when the skier tries to land, then the skier will crash 
   * while you are doing a trick in the air, you will gain style points 
   * if you hold the skier_jump_5 pose, then you'll gain extra points since that pose has a bunch of sparkles
+  * skier will land only if it's displaying the skier_jump_1 asset
+  * it's very hard to complete a trick on a normal jump and is best used when doing a ramp jump
 * jump ramps 
   * when the skier collides with a jump ramp then they will stay in the air at double speed for 100 frames
   * the skier remains in the jump state for the entire jump 
   * the skier will still collide with trees even if jumping from a ramp 
   * doing a jump ramp is the only way to outrun the rhino
     * the rhino runs 30% faster than the skier and runs directly towards it 
-    * the ramp jump makes the skier travel twice as fast, so if you can hit a lot of jumps then the rhino won't catch you.
+    * the ramp jump makes the skier travel twice as fast, so if you can hit a lot of jumps then the rhino won't be able to catch you.
 * Distance score and Style score is displayed
-  * Distance score takes the vertical distance that the skier has traveled and shows it to the user (both up and down motion).
-  * Style score adds points if the skier is doing a trick and subtracts points if the skier is crashes
+  * Distance score takes the vertical distance that the skier has traveled and shows it to the user (both up and down distance).
+  * Style score adds points if the skier is doing a trick and subtracts points if the skier is crashed
 * Rhino
   * chases down and eats the skier 
   * doesn't move until the skier hits a distance of 1000
-  * starts -1000 pixels from the skier's start line
+  * starts -1500 pixels from the skier's start line
   * runs 30% faster than the skier, so will catch up if the skier does not take lots of ramp jumps or if the skier crashes
   * destroys obstacles if touches them.  I added a 'destroyed' asset for each obstacle and if the rhino touches a non-destroyed obstacle it will switch it's asset name
   * eats the skier when a collision is detected
   * once the skier is eaten, the skier's asset is replaced with a pool of blood
   * animation updates every 10 frames, otherwise it looks very choppy
+  * the rhino moves every frame
   * checks where the skier is and moves toward it.  If the skier is direcly below it will move down, if the skier is down left then it will move down left, etc... 
+  * will alter its 'x' position before it moves to match the skier
+    * this prevents the user from cheating by moving really far left or right to gain more distance before the rhino chases them
 
 **Coding Decisions:**
 * Adding state to the skier in addition to the direction 
-  * I added state since ultimately relying solely on direction is what caused the bug I fixed
+  * I added state since relying solely on direction is what caused the bug I fixed
   * State allowed me to treat motion differently depending on the state the skier is currently in
     * for instance when jumping I did not want the user to be able to change the trajectory
 * Creating MovingEntity that skier and rhino extend
@@ -150,9 +161,12 @@ We are looking forward to see what you come up with!
     * for instance both the skier and the rhino need to know when they collide with an Obstacle 
       * the rhino will destroy the obstacle and the skier will crash 
     * both need to know when they collide into eachother
+      * rhino will begin the eat animation
+      * skier will change its asset to a pool of blood
     * both have a need for a move() function every frame 
   * Adding this manager took some of the responsibility off of Game.ts and allowed all MovingEntities to be controlled by this manager 
-  * This also followed the pattern presented by ObstacleManager and AssetManager
+    * This also followed the pattern presented by ObstacleManager and AssetManager
+    * moved the skier controls from the keyboard from Game.js to MovingEntityManager since Game doesn't need to know how to move the skier
   * Allows easier unit testing without having to create/mock a Game object
 * Skier can outrun the rhino
   * I liked the idea that the skier if performing perfectly could outrun the rhino
@@ -163,8 +177,15 @@ We are looking forward to see what you come up with!
   * You get -25 points per frame for a crash, additionally you get +10 points per frame for a trick and an aditional +50 points if you're in the style trick position.
 
 **Running the Code:**
-* locally
+* locally dev
   1. npm install
   1. npm run dev 
+  1. go to localhost:8080
+* production
+  1. npm run build
+  1. node server.js
+  1. go to localhost:5000
+* to play the game without having to build
+  1. go to https://jeff-hildebrandt-ceros-ski.herokuapp.com/
 
 *********************************************************************************************************
