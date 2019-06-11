@@ -1,7 +1,7 @@
 {
   "name": "ceros-ski",
   "version": "1.0.0",
-  "description": "Ceros full stack developer code challenge",
+  "description": "Ceros full stack developer code implementation",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development",
@@ -11,9 +11,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ceros/ceros-ski.git"
+    "url": "git+https://github.com/JefreyHildebrandt/ceros-ski-master"
   },
-  "author": "Dan Wash",
+  "author": "Jeff Hildebrandt",
   "license": "",
   "homepage": "https://github.com/ceros/ceros-ski#readme",
   "devDependencies": {
