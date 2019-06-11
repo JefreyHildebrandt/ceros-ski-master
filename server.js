@@ -5,4 +5,4 @@ let  app = express()
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.get('/', (req, res) => res.sendFile('index.html'));
-app.listen(8080,  () => console.log("Example app listening on port 8080!"));
+app.listen(process.env.PORT || 5000,  () => console.log("Example app listening on port 8080!"));
